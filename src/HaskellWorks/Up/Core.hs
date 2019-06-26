@@ -1,4 +1,5 @@
-{-# LANGUAGE RankNTypes #-}
+{-# LANGUAGE DeriveFunctor #-}
+{-# LANGUAGE RankNTypes    #-}
 
 module HaskellWorks.Up.Core where
 
@@ -34,3 +35,17 @@ script "exe" = Just $ Task $ \fetch ->
       libml = fetch "lib.ml"
   in compile [src, ifS (parse cfg) libc libml]
 script _ = Nothing
+
+newtype Deploy a = Deploy { runDeploy :: IO a } deriving Functor
+
+instance Applicative Deploy where
+  pure = Deploy . return
+  (<*>) (Deploy iof) (Deploy ioa) = Deploy (iof <*> ioa)
+
+instance Selective Deploy where
+  select (Deploy iox) (Deploy iof) = Deploy $ do
+    rx <- iox
+    rf <- iof
+    case rx of
+      Left ra  -> return (rf ra)
+      Right rb -> return rb
