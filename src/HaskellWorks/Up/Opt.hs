@@ -15,9 +15,7 @@ data ParserInfo a = ParserInfo
 
 data Parser a where
   NilP :: a -> Parser a
-  ConsP :: Option r (a -> b)
-        -> Parser a
-        -> Parser b
+  ConsP :: Option r (a -> b) -> Parser a -> Parser b
 
 data Option r a = Option
   { _optMain    :: OptReader r
@@ -35,8 +33,7 @@ instance Functor Parser where
 instance Applicative Parser where
   pure = NilP
   NilP f <*> p = fmap f p
-  ConsP opt p1 <*> p2 =
-    ConsP (fmap uncurry opt) $ (,) <$> p1 <*> p2
+  ConsP opt p1 <*> p2 = ConsP (fmap uncurry opt) $ (,) <$> p1 <*> p2
 
 data OptReader a
   = OptReader [OptName] (String -> Maybe a)
