@@ -23,8 +23,8 @@ data Option r a = Option
   , _optShow    :: Bool
   , _optHelp    :: String
   , _optMetaVar :: String
-  , _optCont    :: r -> Maybe (Parser a) }
-  deriving Functor
+  , _optCont    :: r -> Maybe (Parser a)
+  } deriving Functor
 
 instance Functor Parser where
   fmap f (NilP x)      = NilP (f x)
