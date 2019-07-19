@@ -1,5 +1,5 @@
 {-# LANGUAGE DeriveFunctor #-}
-{-# LANGUAGE GADT          #-}
+{-# LANGUAGE GADTs         #-}
 {-# LANGUAGE RankNTypes    #-}
 
 module HaskellWorks.Up.Opt where
@@ -27,6 +27,16 @@ data Option r a = Option
   , _optMetaVar :: String
   , _optCont    :: r -> Maybe (Parser a) }
   deriving Functor
+
+instance Functor Parser where
+  fmap f (NilP x)      = NilP (f x)
+  fmap f (ConsP opt p) = ConsP (fmap (f.) opt) p
+
+instance Applicative Parser where
+  pure = NilP
+  NilP f <*> p = fmap f p
+  ConsP opt p1 <*> p2 =
+    ConsP (fmap uncurry opt) $ (,) <$> p1 <*> p2
 
 data OptReader a
   = OptReader [OptName] (String -> Maybe a)

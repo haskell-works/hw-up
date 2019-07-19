@@ -33,6 +33,7 @@ library
   import:               base, config
                       , selective
   exposed-modules:      HaskellWorks.Up.Core
+                        HaskellWorks.Up.Opt
   hs-source-dirs:       src
 
 executable hw-up
