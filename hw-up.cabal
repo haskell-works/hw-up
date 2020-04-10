@@ -11,6 +11,7 @@ author:                 John Ky
 maintainer:             newhoggy@gmail.com
 copyright:              2019 John Ky
 category:               Development
+tested-with:            GHC == 8.10.1, GHC == 8.8.3, GHC == 8.6.5, GHC == 8.4.4
 extra-source-files:     CHANGELOG.md
 
 common base                 { build-depends: base                 >= 4          && < 5      }
