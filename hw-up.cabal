@@ -16,7 +16,7 @@ extra-source-files:     CHANGELOG.md
 
 common base                 { build-depends: base                 >= 4          && < 5      }
 
-common doctest              { build-depends: doctest              >= 0.16.2     && < 0.17   }
+common doctest              { build-depends: doctest              >= 0.16.2     && < 0.19   }
 common doctest-discover     { build-depends: doctest-discover     >= 0.2        && < 0.3    }
 common hedgehog             { build-depends: hedgehog             >= 1.0        && < 1.1    }
 common hspec                { build-depends: hspec                >= 2.4        && < 2.6    }
